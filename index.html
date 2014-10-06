@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf8">
+    <title>Chester Challenge</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  </head>
+  <body>
+    <div ng-controller="MainCtrl">
+      <div class="jumbotron" ng-hide="hideBillboard">
+        <img src="images/chester.gif" />
+        <h1>Chester's Challenge</h1>
+        <p>Help Chester get grapes for supper!</p>
+        <div class="pull-right"><button class="btn btn-default" ng-click="hide()">Hide</button></div>
+      </div>
+
+      <div class="col-md-4">
+        <h3>Commands</h3>
+        <div class="list-group">
+          <div class="list-group-item">
+            <button class="btn btn-large btn-warning" style="width: 100%;" ng-click="addCmd('moveForward')">
+              <i class="glyphicon glyphicon-arrow-up"></i> 
+              Move Forward
+            </button>
+          </div>
+          <div class="list-group-item">
+            <button class="btn btn-large btn-primary"  style="width: 100%;" ng-click="addCmd('turnRight')">
+              <i class="glyphicon glyphicon-hand-right"></i>
+              Turn Right
+             </button>
+          </div>
+          <div class="list-group-item">
+            <button class="btn btn-large btn-success"  style="width: 100%;" ng-click="addCmd('turnLeft')">
+              <i class="glyphicon glyphicon-hand-left"></i>
+              Turn Left
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>Instructions</h3>
+        <div class="list-group">
+          <div class="list-group-item" ng-repeat="cmd in instructions track by $index">
+            <div class="pull-right" ng-click="instructions.splice($index, 1)"><i class="glyphicon glyphicon-trash"></i></div>
+            <h4>
+              <i ng-class="{ glyphicon: true,  'glyphicon-hand-left': cmd === 'turnLeft', 'glyphicon-hand-right': cmd === 'turnRight', 'glyphicon-arrow-up': cmd === 'moveForward'}"></i>
+              {{cmd}}
+            </h4>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">     
+        <h3>Trail</h3>
+        <button class="btn btn-primary btn-large" ng-click="play()">Play</button>
+        <button class="btn btn-default btn-large" ng-click="reset()">Reset</button>
+        <div class="pull-right"><span class="badge">Score: {{score}}</span></div>
+
+        <table class="table table-bordered" border="1">
+          <tr ng-repeat="row in rows">
+            <td style="padding: 10px;" ng-repeat="col in row.cols">
+              <img ng-src="{{col.value}}" height="32" width="32" />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
