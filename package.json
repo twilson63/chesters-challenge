@@ -10,8 +10,8 @@
   "window": {
     "title": "Chesters Challenge",
     "toolbar": false,
-    "height": "780",
-    "width": "1096"
+    "height": 780,
+    "width": 1096
   },
   "author": "",
   "license": "ISC",
