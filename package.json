@@ -2,14 +2,14 @@
   "name": "chesters-challenge",
   "version": "0.0.0",
   "description": "A simple programing learning game",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "dev": "watchify -e app/index.js -o bundle.js"
+    "dev": "watchify -e app/index.js -o bundle.js",
+    "start": "nodewebkit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "git://github.com/yyx990803/vue.git",
     "underscore": "^1.7.0",
     "tap": "^0.4.13",
     "auto-curry": "^0.2.0",
