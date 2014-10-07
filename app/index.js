@@ -20,6 +20,7 @@ angular.module('app', ['ngAudio'])
     };
     
     $scope.reset = function() {
+      ngAudio.unmute();
       $scope.score = 0;
       $scope.rows = _.times(10, function() {
         return { cols: _.times(10, function() { return { value: 'images/spacer.gif' }; }) };
@@ -52,7 +53,8 @@ angular.module('app', ['ngAudio'])
         });
       });
 
-      game.on('end', function(score) {
+      game.on('end', function(score) 
+        ngAudio.mute();
         alert('Game Over ' + score);
       });
     };
