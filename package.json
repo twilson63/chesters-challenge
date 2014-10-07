@@ -1,11 +1,17 @@
 {
   "name": "chesters-challenge",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A simple programing learning game",
   "main": "index.html",
   "scripts": {
     "dev": "watchify -e app/index.js -o bundle.js",
     "start": "nodewebkit"
+  },
+  "window": {
+    "title": "Chesters Challenge",
+    "toolbar": false,
+    "height": "780",
+    "width": "1096"
   },
   "author": "",
   "license": "ISC",
