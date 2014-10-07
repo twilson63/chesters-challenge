@@ -4,8 +4,8 @@ var _ = require('underscore');
 
 angular.module('app', ['ngAudio'])
   .controller('MainCtrl', function($scope, ngAudio) {
-    $scope.chesterMoving = ngAudio.load("sounds/marker-writing.mp3");
-    $scope.gotGrape = ngAudio.load('sounds/magic-chime.mp3');
+    //$scope.chesterMoving = ngAudio.load("sounds/marker-writing.mp3");
+    //$scope.gotGrape = ngAudio.load('sounds/magic-chime.mp3');
     var game;
     $scope.score = 0;
     
@@ -21,6 +21,7 @@ angular.module('app', ['ngAudio'])
     };
     
     $scope.reset = function() {
+      ngAudio.unmute();
       $scope.score = 0;
       $scope.rows = _.times(10, function() {
         return { cols: _.times(10, function() { return { value: 'images/spacer.gif' }; }) };
@@ -40,20 +41,21 @@ angular.module('app', ['ngAudio'])
 
       game.on('turn', function(p, score) {
         $scope.$apply(function(){
-          var sound = $scope.gotGrape;
-          if ($scope.score === score) { sound = $scope.chesterMoving; }
-          sound.play();
+          //var sound = $scope.gotGrape;
+          //if ($scope.score === score) { sound = $scope.chesterMoving; }
+          //sound.play();
           $scope.score = score;
           $scope.rows[p[0]].cols[p[1]].value = 'images/chester.gif';  
           
-          setTimeout(function() {
-            sound.stop();
-          }, 300);
+//           setTimeout(function() {
+//             sound.stop();
+//           }, 300);
           
         });
       });
 
-      game.on('end', function(score) {
+      game.on('end', function(score) { 
+        //ngAudio.mute();
         alert('Game Over ' + score);
       });
     };
