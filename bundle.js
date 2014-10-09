@@ -1,68 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/home/action/workspace/chesters-challenge/app/index.js":[function(require,module,exports){
-var makeGame = require('../game');
-var _ = require('underscore');
-
-angular.module('app', ['ngAudio'])
-  .controller('MainCtrl', function($scope, ngAudio) {
-    //$scope.chesterMoving = ngAudio.load("sounds/marker-writing.mp3");
-    //$scope.gotGrape = ngAudio.load('sounds/magic-chime.mp3');
-    var game;
-    $scope.score = 0;
-    
-    $scope.hide = function() {
-      $scope.hideBillboard = true;
-    };
-    $scope.play = function() {
-      game.play($scope.instructions);  
-    };
-    
-    $scope.addCmd = function(cmd) {
-      $scope.instructions.push(cmd);
-    };
-    
-    $scope.reset = function() {
-      ngAudio.unmute();
-      $scope.score = 0;
-      $scope.rows = _.times(10, function() {
-        return { cols: _.times(10, function() { return { value: 'images/spacer.gif' }; }) };
-      });
-
-      $scope.rows[0].cols[0].value = 'images/chester.gif';
-      $scope.instructions = [];
-      game = makeGame();
-
-      game.on('ready', function(grapes) {
-        _(grapes).each(function(p) {
-          $scope.$apply(function(){
-            $scope.rows[p[0]].cols[p[1]].value = 'images/grape.jpg';  
-          });
-        });
-      });
-
-      game.on('turn', function(p, score) {
-        $scope.$apply(function(){
-          //var sound = $scope.gotGrape;
-          //if ($scope.score === score) { sound = $scope.chesterMoving; }
-          //sound.play();
-          $scope.score = score;
-          $scope.rows[p[0]].cols[p[1]].value = 'images/chester.gif';  
-          
-//           setTimeout(function() {
-//             sound.stop();
-//           }, 300);
-          
-        });
-      });
-
-      game.on('end', function(score) { 
-        //ngAudio.mute();
-        alert('Game Over ' + score);
-      });
-    };
-    
-    $scope.reset();
-  });
-},{"../game":"/home/action/workspace/chesters-challenge/game.js","underscore":"/home/action/workspace/chesters-challenge/node_modules/underscore/underscore.js"}],"/home/action/workspace/chesters-challenge/chester.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/home/action/workspace/chesters-challenge/app/chester.js":[function(require,module,exports){
 var cu = require('auto-curry');
 
 module.exports = function(boundsX, boundsY) {
@@ -131,7 +67,7 @@ module.exports = function(boundsX, boundsY) {
     turnLeft: turn('left')
   });
 }
-},{"auto-curry":"/home/action/workspace/chesters-challenge/node_modules/auto-curry/index.js"}],"/home/action/workspace/chesters-challenge/game.js":[function(require,module,exports){
+},{"auto-curry":"/home/action/workspace/chesters-challenge/node_modules/auto-curry/index.js"}],"/home/action/workspace/chesters-challenge/app/game.js":[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 var chesterModule = require('./chester');
@@ -192,7 +128,73 @@ module.exports = function(options) {
   
   return Object.freeze(new Game());
 }
-},{"./chester":"/home/action/workspace/chesters-challenge/chester.js","async":"/home/action/workspace/chesters-challenge/node_modules/async/lib/async.js","events":"/home/action/workspace/chesters-challenge/node_modules/watchify/node_modules/browserify/node_modules/events/events.js","underscore":"/home/action/workspace/chesters-challenge/node_modules/underscore/underscore.js","util":"/home/action/workspace/chesters-challenge/node_modules/watchify/node_modules/browserify/node_modules/util/util.js"}],"/home/action/workspace/chesters-challenge/node_modules/async/lib/async.js":[function(require,module,exports){
+},{"./chester":"/home/action/workspace/chesters-challenge/app/chester.js","async":"/home/action/workspace/chesters-challenge/node_modules/async/lib/async.js","events":"/home/action/workspace/chesters-challenge/node_modules/watchify/node_modules/browserify/node_modules/events/events.js","underscore":"/home/action/workspace/chesters-challenge/node_modules/underscore/underscore.js","util":"/home/action/workspace/chesters-challenge/node_modules/watchify/node_modules/browserify/node_modules/util/util.js"}],"/home/action/workspace/chesters-challenge/app/index.js":[function(require,module,exports){
+var makeGame = require('./game');
+var _ = require('underscore');
+
+angular.module('app', ['ngAudio'])
+  .controller('MainCtrl', function($scope, ngAudio) {
+    $scope.chesterMoving = ngAudio.load("sounds/marker-writing.mp3");
+    $scope.gotGrape = ngAudio.load('sounds/magic-chime.mp3');
+    
+    var game;
+    $scope.score = 0;
+    
+    $scope.hide = function() {
+      $scope.hideBillboard = true;
+    };
+    $scope.play = function() {
+      game.play($scope.instructions);  
+    };
+    
+    $scope.addCmd = function(cmd) {
+      $scope.instructions.push(cmd);
+    };
+    
+    $scope.reset = function() {
+      ngAudio.unmute();
+      $scope.score = 0;
+      $scope.rows = _.times(10, function() {
+        return { cols: _.times(10, function() { return { value: 'images/spacer.gif' }; }) };
+      });
+
+      $scope.rows[0].cols[0].value = 'images/chester.gif';
+      $scope.instructions = [];
+      game = makeGame();
+
+      game.on('ready', function(grapes) {
+        _(grapes).each(function(p) {
+          $scope.$apply(function(){
+            $scope.rows[p[0]].cols[p[1]].value = 'images/grape.jpg';  
+          });
+        });
+      });
+
+      game.on('turn', function(p, score) {
+        $scope.$apply(function(){
+          if ($scope.score === score) { $scope.chesterMoving.play(); }
+          if ($scope.score !== score) { $scope.gotGrape.play(); }
+
+          $scope.score = score;
+          $scope.rows[p[0]].cols[p[1]].value = 'images/chester.gif';  
+          
+          setTimeout(function() {
+            $scope.chesterMoving.stop();
+            $scope.gotGrape.stop();
+          }, 300);
+          
+        });
+      });
+
+      game.on('end', function(score) { 
+        //ngAudio.mute();
+        alert('Game Over ' + score);
+      });
+    };
+    
+    $scope.reset();
+  });
+},{"./game":"/home/action/workspace/chesters-challenge/app/game.js","underscore":"/home/action/workspace/chesters-challenge/node_modules/underscore/underscore.js"}],"/home/action/workspace/chesters-challenge/node_modules/async/lib/async.js":[function(require,module,exports){
 (function (process){
 /*!
  * async
