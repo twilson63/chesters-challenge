@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "dev": "watchify -e app/index.js -o bundle.js",
-    "start": "nodewebkit"
+    "start": "w3",
+    "test": "echo ok"
   },
   "window": {
     "title": "Chesters Challenge",
@@ -16,10 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "underscore": "^1.7.0",
-    "tap": "^0.4.13",
+    "async": "^0.9.0",
     "auto-curry": "^0.2.0",
-    "async": "^0.9.0"
+    "underscore": "^1.7.0",
+    "w3": "^0.6.1"
   },
   "devDependencies": {
     "tap": "^0.4.13"
